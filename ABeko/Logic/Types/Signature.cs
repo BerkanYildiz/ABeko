@@ -34,12 +34,48 @@
         }
 
         /// <summary>
+        /// Gets the signature byte array length.
+        /// </summary>
+        public uint Length
+        {
+            get
+            {
+                if (this.SigBytes == null)
+                {
+                    return 0;
+                }
+
+                return (uint) this.SigBytes.Length;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the signature mask.
         /// </summary>
         public SignatureMask Mask
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="byte"/> at the specified index.
+        /// </summary>
+        /// <value>
+        /// The <see cref="byte"/>.
+        /// </value>
+        /// <param name="I">The index.</param>
+        public byte this[int I]
+        {
+            get
+            {
+                if (I >= this.Length)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
+                return this.SigBytes[I];
+            }
         }
 
         /// <summary>
@@ -61,6 +97,11 @@
             this.SetName(Name);
             this.SetSig(Signature);
             this.SetMask(Mask);
+
+            if (this.Length != this.Mask.Length)
+            {
+                throw new ArgumentException("The signature and the mask length doesn't match");
+            }
         }
 
         /// <summary>
@@ -74,13 +115,18 @@
             this.SetName(Name);
             this.SetSig(Signature);
             this.SetMask(Mask);
+
+            if (this.Sig.Length != this.Mask.Length)
+            {
+                throw new ArgumentException("The signature and the mask length doesn't match");
+            }
         }
 
         /// <summary>
         /// Sets the name of this signature.
         /// </summary>
         /// <param name="Name">The name.</param>
-        public void SetName(string Name)
+        internal void SetName(string Name)
         {
             if (string.IsNullOrEmpty(Name))
             {
@@ -95,7 +141,7 @@
         /// </summary>
         /// <param name="Signature">The signature.</param>
         /// <exception cref="System.ArgumentNullException">Signature</exception>
-        public void SetSig(string Signature)
+        internal void SetSig(string Signature)
         {
             if (string.IsNullOrEmpty(Signature))
             {
@@ -127,7 +173,7 @@
         /// </summary>
         /// <param name="Signature">The signature.</param>
         /// <exception cref="System.ArgumentNullException">Signature</exception>
-        public void SetSig(byte[] Signature)
+        internal void SetSig(byte[] Signature)
         {
             if (Signature == null || Signature.Length == 0)
             {
@@ -142,7 +188,7 @@
         /// </summary>
         /// <param name="SignatureMask">The signature mask.</param>
         /// <exception cref="System.ArgumentNullException">SignatureMask</exception>
-        public void SetMask(SignatureMask SignatureMask)
+        internal void SetMask(SignatureMask SignatureMask)
         {
             if (SignatureMask == null)
             {

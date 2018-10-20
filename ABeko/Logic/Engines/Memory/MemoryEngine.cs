@@ -1,10 +1,10 @@
-﻿namespace ABeko.Logic.Engines
+﻿namespace ABeko.Logic.Engines.Memory
 {
     using System;
 
     using ABeko.Interfaces;
 
-    public class MemoryEngine : IDisposable
+    public partial class MemoryEngine : IDisposable
     {
         /// <summary>
         /// Gets or sets the event invoked when this instance is disposed.
@@ -27,7 +27,7 @@
         /// <summary>
         /// Gets the memory handler.
         /// </summary>
-        public IMemory Memory
+        public IMemory Handler
         {
             get
             {
@@ -71,7 +71,7 @@
         /// </summary>
         /// <param name="BekoEngine">The memory engine.</param>
         /// <exception cref="System.ArgumentNullException">BekoEngine - BekoEngine is null</exception>
-        public void SetBekoEngine(BekoEngine BekoEngine)
+        internal void SetBekoEngine(BekoEngine BekoEngine)
         {
             if (this.IsDisposed)
             {

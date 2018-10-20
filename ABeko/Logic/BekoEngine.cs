@@ -5,6 +5,9 @@
 
     using ABeko.Interfaces;
     using ABeko.Logic.Engines;
+    using ABeko.Logic.Engines.Memory;
+
+    using ScannerEngine = ABeko.Logic.Engines.Scanner.ScannerEngine;
 
     public class BekoEngine : IDisposable
     {
@@ -114,10 +117,19 @@
         }
 
         /// <summary>
+        /// Prevents a default instance of the <see cref="BekoEngine"/> class from being created.
+        /// </summary>
+        private BekoEngine()
+        {
+            this.MemoryEngine = new MemoryEngine(this);
+            this.ScannerEngine = new ScannerEngine(this);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BekoEngine"/> class.
         /// </summary>
         /// <param name="Configuration">The configuration.</param>
-        public BekoEngine(BekoConfig Configuration)
+        public BekoEngine(BekoConfig Configuration) : this()
         {
             this.SetConfiguration(Configuration);
         }
@@ -143,8 +155,6 @@
                 throw new ArgumentNullException(nameof(Configuration), "Configuration is null");
             }
 
-            this.Configuration = Configuration;
-
             if (Configuration.Process == null)
             {
                 throw new ArgumentNullException(nameof(Configuration.Process), "Configuration->Process is null");
@@ -155,7 +165,11 @@
                 throw new ArgumentNullException(nameof(Configuration.MemoryHandler), "Configuration->MemoryHandler is null");
             }
 
-            Configuration.MemoryHandler.SetProcId(Process.Id);
+            this.Configuration = Configuration;
+
+            // ..
+
+            Configuration.MemoryHandler.SetProcId(Configuration.Process.Id);
         }
 
         /// <summary>

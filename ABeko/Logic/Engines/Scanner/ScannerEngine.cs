@@ -1,10 +1,11 @@
-﻿namespace ABeko.Logic.Engines
+﻿namespace ABeko.Logic.Engines.Scanner
 {
     using System;
 
     using ABeko.Logic.Collections;
+    using ABeko.Logic.Engines.Memory;
 
-    public class ScannerEngine : IDisposable
+    public partial class ScannerEngine : IDisposable
     {
         /// <summary>
         /// Gets or sets the event invoked when this instance is disposed.
@@ -36,7 +37,7 @@
         /// <summary>
         /// Gets the memory engine.
         /// </summary>
-        public MemoryEngine MemoryEngine
+        private MemoryEngine MemoryEngine
         {
             get
             {
@@ -80,7 +81,7 @@
         /// </summary>
         /// <param name="BekoEngine">The memory engine.</param>
         /// <exception cref="System.ArgumentNullException">BekoEngine - BekoEngine is null</exception>
-        public void SetBekoEngine(BekoEngine BekoEngine)
+        internal void SetBekoEngine(BekoEngine BekoEngine)
         {
             if (this.IsDisposed)
             {
@@ -89,7 +90,7 @@
 
             if (BekoEngine == null)
             {
-                throw new ArgumentNullException(nameof(BekoEngine), "BekoEngine is null");
+                throw new ArgumentNullException(nameof(BekoEngine));
             }
 
             this.BekoEngine = BekoEngine;

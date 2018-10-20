@@ -2,10 +2,12 @@
 {
     using System;
 
+    using ABeko.Logic.Enum;
+
     public class SignatureMask
     {
-        public char AnythingMask;
-        public char SpecifiedMask;
+        public char AnythingMask  = '?';
+        public char SpecifiedMask = 'X';
 
         /// <summary>
         /// Gets or sets the mask string.
@@ -14,6 +16,54 @@
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Gets the length of the mask string.
+        /// </summary>
+        public uint Length
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.Mask))
+                {
+                    return 0;
+                }
+
+                return (uint) this.Mask.Length;
+            }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="MaskChar"/> at the specified index.
+        /// </summary>
+        /// <value>
+        /// The <see cref="MaskChar"/>.
+        /// </value>
+        /// <param name="I">The index.</param>
+        public MaskChar this[int I]
+        {
+            get
+            {
+                if (I >= this.Mask.Length)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
+                var Char = this.Mask[I];
+
+                if (Char == this.AnythingMask)
+                {
+                    return MaskChar.Anything;
+                }
+
+                if (Char == this.SpecifiedMask)
+                {
+                    return MaskChar.Specified;
+                }
+
+                return MaskChar.Unknown;
+            }
         }
 
         /// <summary>
@@ -30,10 +80,20 @@
         /// <param name="Mask">The mask.</param>
         /// <param name="AnythingMask">The anything mask.</param>
         /// <param name="SpecifiedMask">The specified mask.</param>
-        public SignatureMask(string Mask, char AnythingMask, char SpecifiedMask)
+        public SignatureMask(string Mask, char AnythingMask = '?', char SpecifiedMask = 'X')
         {
             this.SetMask(Mask);
             this.SetMasks(AnythingMask, SpecifiedMask);
+
+            foreach (var MaskChar in Mask)
+            {
+                if (MaskChar == this.AnythingMask || MaskChar == this.SpecifiedMask)
+                {
+                    continue;
+                }
+
+                throw new ArgumentException("Mask contains characters that are neither AnythingMask or SpecifiedMask");
+            }
         }
 
         /// <summary>
@@ -41,7 +101,7 @@
         /// </summary>
         /// <param name="Mask">The mask.</param>
         /// <exception cref="System.ArgumentNullException">Mask</exception>
-        public void SetMask(string Mask)
+        internal void SetMask(string Mask)
         {
             if (string.IsNullOrEmpty(Mask))
             {
@@ -56,7 +116,7 @@
         /// </summary>
         /// <param name="AnythingMask">Anything mask.</param>
         /// <param name="SpecifiedMask">The specified mask.</param>
-        public void SetMasks(char AnythingMask, char SpecifiedMask)
+        internal void SetMasks(char AnythingMask, char SpecifiedMask)
         {
             this.SetAnythingMask(AnythingMask);
             this.SetSpecifiedMask(SpecifiedMask);
@@ -67,7 +127,7 @@
         /// </summary>
         /// <param name="AnythingMask">the anything mask.</param>
         /// <exception cref="System.ArgumentNullException">AnythingMask</exception>
-        public void SetAnythingMask(char AnythingMask)
+        internal void SetAnythingMask(char AnythingMask)
         {
             this.AnythingMask = AnythingMask;
         }
@@ -77,7 +137,7 @@
         /// </summary>
         /// <param name="SpecifiedMask">The specified mask.</param>
         /// <exception cref="System.ArgumentNullException">SpecifiedMask</exception>
-        public void SetSpecifiedMask(char SpecifiedMask)
+        internal void SetSpecifiedMask(char SpecifiedMask)
         {
             this.SpecifiedMask = SpecifiedMask;
         }

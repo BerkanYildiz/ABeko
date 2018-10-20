@@ -45,8 +45,13 @@
     <Compile Include="Logic\BekoConfig.cs" />
     <Compile Include="Logic\BekoEngine.cs" />
     <Compile Include="Logic\Collections\Signatures.cs" />
-    <Compile Include="Logic\Engines\ScannerEngine.cs" />
-    <Compile Include="Logic\Engines\MemoryEngine.cs" />
+    <Compile Include="Logic\Engines\Memory\Handlers\NativeMemoryHandler.cs" />
+    <Compile Include="Logic\Engines\Scanner\ScannerMethods.cs" />
+    <Compile Include="Logic\Engines\Memory\MemoryMethods.cs" />
+    <Compile Include="Logic\Engines\Scanner\ScannerEngine.cs" />
+    <Compile Include="Logic\Engines\Memory\MemoryEngine.cs" />
+    <Compile Include="Logic\Enum\MaskChar.cs" />
+    <Compile Include="Logic\Types\SignatureResult.cs" />
     <Compile Include="Logic\Types\SignatureMask.cs" />
     <Compile Include="Logic\Types\Signature.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using ABeko.Logic;
+    using ABeko.Logic.Engines.Memory.Handlers;
     using ABeko.Logic.Types;
 
     internal static class Program
@@ -18,7 +19,7 @@
             var EngineConfig    = new BekoConfig
             {
                  Process        = Process.GetCurrentProcess(),
-                 MemoryHandler  = null
+                 MemoryHandler  = new NativeMemoryHandler()
             };
 
             // ..
@@ -36,34 +37,31 @@
 
             if (Engine != null)
             {
-                Console.WriteLine("[*] Engine initialized.");
-
                 using (Engine)
                 {
                     var Scanner = Engine.ScannerEngine;
                     var Memory  = Engine.MemoryEngine;
-
-                    if (Scanner != null)
-                    {
-                        Console.WriteLine("[*] ScannerEngine initialized.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("[*] ScannerEngine failed to initialize.");
-                    }
-
-                    if (Memory != null)
-                    {
-                        Console.WriteLine("[*] MemoryEngine initialized.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("[*] MemoryEngine failed to initialize.");
-                    }
+                    var Address = 0xFFFFFFLu;
 
                     // Sig-scanning
 
-                    Scanner.Signatures.Add(new Signature("UWorldSig", Signature: "00-00-00-00-00-00-00-00-00", new SignatureMask("BBBBxxBB", AnythingMask: 'x', SpecifiedMask: 'B')));
+                    Scanner.Signatures.Add(new Signature("UWorldSig", Signature: "00-00-00", new SignatureMask("XXX", AnythingMask: '*', SpecifiedMask: 'X')));
+
+                    try
+                    {
+                        if (Scanner.TrySearchFor("UWorldSig", From: 0x0000007FFFFFFFFF, To: 0x0000007FFFFFFFFF + 32, out var Result))
+                        {
+                            Console.WriteLine("[*] Found the specified signature at 0x" + Result.Address.ToString("X").PadLeft(16, '0') + ".");
+                        }
+                        else
+                        {
+                            Console.WriteLine("[*] Failed to find the '" + Result.Signature.Name + "' signature.");
+                        }
+                    }
+                    catch (Exception Exception)
+                    {
+                        Console.WriteLine("[*] " + Exception.GetType().Name + ", "  + Exception.Message);
+                    }
                 }
 
                 Console.WriteLine("[*] Engine disposed.");
