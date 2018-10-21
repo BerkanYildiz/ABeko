@@ -9,11 +9,19 @@
         /// <summary>
         /// Gets or sets the targeted process.
         /// </summary>
-        public Process Process;
+        public Process Process
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Gets or sets the memory handler.
         /// </summary>
-        public IMemory MemoryHandler;
+        public IMemory MemoryHandler
+        {
+            get;
+            set;
+        }
     }
 }

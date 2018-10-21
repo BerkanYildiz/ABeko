@@ -75,6 +75,22 @@
 
                 return this.Configuration.Process;
             }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.Configuration.Process = value;
+
+                if (this.Configuration.MemoryHandler == null)
+                {
+                    throw new Exception("MemoryHandler was null when setting process.");
+                }
+
+                this.Configuration.MemoryHandler.SetProcId(value.Id);
+            }
         }
 
         /// <summary>
@@ -170,6 +186,26 @@
             // ..
 
             Configuration.MemoryHandler.SetProcId(Configuration.Process.Id);
+        }
+
+        /// <summary>
+        /// Sets the process.
+        /// </summary>
+        /// <param name="Process">The process.</param>
+        /// <exception cref="ArgumentNullException">Process</exception>
+        public void SetProcess(Process Process)
+        {
+            if (Process == null)
+            {
+                throw new ArgumentNullException(nameof(Process));
+            }
+
+            if (this.Process == Process)
+            {
+                return;
+            }
+
+            this.Configuration.Process = Process;
         }
 
         /// <summary>

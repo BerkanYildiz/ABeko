@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using ABeko.CLI.Logic.Commands;
 
@@ -21,6 +22,10 @@
         static CliCommands()
         {
             CliCommands.AvailableCommands = new Dictionary<string, Action<string[]>>();
+            CliCommands.AvailableCommands.Add("help", HelpCommand.Execute);
+            CliCommands.AvailableCommands.Add("clear", ClearCommand.Execute);
+            CliCommands.AvailableCommands.Add("open", OpenCommand.Execute);
+            CliCommands.AvailableCommands.Add("close", CloseCommand.Execute);
             CliCommands.AvailableCommands.Add("scan", ScanCommand.Execute);
         }
 
@@ -28,10 +33,26 @@
         /// Tries to execute the specified command.
         /// </summary>
         /// <param name="Parameters">The parameters.</param>
-        /// <returns></returns>
-        static bool TryExecute(params string[] Parameters)
+        internal static bool TryExecute(params string[] Parameters)
         {
+            if (Parameters == null || Parameters.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(Parameters));
+            }
 
+            var Command = Parameters[0];
+
+            if (CliCommands.AvailableCommands.ContainsKey(Command))
+            {
+                CliCommands.AvailableCommands[Command].Invoke(Parameters.Skip(1).ToArray());
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("[*] Specified command does not exist.");
+            }
+
+            return false;
         }
     }
 }

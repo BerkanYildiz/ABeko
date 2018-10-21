@@ -1,6 +1,6 @@
 ﻿namespace ABeko.CLI.Logic.Commands
 {
-    internal static class ScanCommand
+    internal static class HelpCommand
     {
         /// <summary>
         /// Executes the command with the specified parameters.

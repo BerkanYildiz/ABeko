@@ -4,18 +4,26 @@
     using System.Diagnostics;
     using System.Threading.Tasks;
 
+    using ABeko.CLI.Logic;
     using ABeko.Logic;
     using ABeko.Logic.Engines.Memory.Handlers;
-    using ABeko.Logic.Types;
 
     internal static class Program
     {
+        /// <summary>
+        /// Gets the core engine.
+        /// </summary>
+        internal static BekoEngine Engine
+        {
+            get;
+            private set;
+        }
+
         /// <summary>
         /// Defines the entry point of this application.
         /// </summary>
         private static async Task Main()
         {
-            var Engine          = (BekoEngine) null;
             var EngineConfig    = new BekoConfig
             {
                  Process        = Process.GetCurrentProcess(),
@@ -37,18 +45,25 @@
 
             if (Engine != null)
             {
+                Console.Write("[*] > ");
+
                 using (Engine)
                 {
-                    var Scanner = Engine.ScannerEngine;
-                    var Memory  = Engine.MemoryEngine;
-                    var Command = Console.ReadLine();
-
                     while (true)
                     {
-                        switch (Command)
-                        {
+                        var Command = Console.ReadLine();
 
+                        if (!string.IsNullOrEmpty(Command))
+                        {
+                            if (Command == "dispose" || Command == "exit" || Command == "quit")
+                            {
+                                break;
+                            }
+
+                            CliCommands.TryExecute(Command.Split(' '));
                         }
+
+                        Console.Write("[*] > ");
                     }
                 }
             }
