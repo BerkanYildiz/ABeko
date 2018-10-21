@@ -2,8 +2,11 @@
 
 ABeko is a repository with libraries and CLI/GUI applications for reading memory, doing scans and dumping processes.
 
-# Example
+# CLI - Example
 
+![ABeko.CLI](https://i.imgur.com/bmSYREJ.png)
+
+# Library - Example
 ```csharp
 namespace ABeko.Tests
 {
