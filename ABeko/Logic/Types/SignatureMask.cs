@@ -175,7 +175,7 @@
             }
             else
             {
-                throw new IndexOutOfRangeException("Offset is out of the mask length range.");
+                throw new IndexOutOfRangeException("Offset is out of the mask length range");
             }
 
             return false;
@@ -189,7 +189,7 @@
         {
             if (this.IsOutOfRange(Offset))
             {
-                throw new IndexOutOfRangeException("Offset is out of the mask length range.");
+                throw new IndexOutOfRangeException("Offset is out of the mask length range");
             }
 
             if (this.Mask[Offset] == this.SpecifiedMask)

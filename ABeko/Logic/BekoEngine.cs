@@ -65,7 +65,7 @@
             {
                 if (this.IsDisposed)
                 {
-                    throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed.");
+                    throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
                 }
 
                 if (this.Configuration == null)
@@ -86,7 +86,7 @@
             {
                 if (this.IsDisposed)
                 {
-                    throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed.");
+                    throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
                 }
 
                 if (this.Configuration == null)
@@ -147,7 +147,7 @@
         {
             if (this.IsDisposed)
             {
-                throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed.");
+                throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
             }
 
             if (Configuration == null)

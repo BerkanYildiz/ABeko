@@ -4,7 +4,7 @@
 
     using ABeko.Logic.Types;
 
-    public partial class ScannerEngine
+    public partial class ScannerEngine : IDisposable
     {
         /// <summary>
         /// Scans for the specified signature in the specified memory range.
@@ -35,7 +35,7 @@
         {
             if (this.IsDisposed)
             {
-                throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed.");
+                throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
             }
 
             if (string.IsNullOrEmpty(SignatureName))
@@ -47,7 +47,7 @@
 
             if (Signature == null)
             {
-                throw new ArgumentException("SignatureName is not in the signatures dictionnary.");
+                throw new ArgumentException("SignatureName is not in the signatures dictionnary");
             }
 
             return this.SearchFor(Signature, From, To);
@@ -82,7 +82,7 @@
         {
             if (this.IsDisposed)
             {
-                throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed.");
+                throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
             }
 
             if (Signature == null)
@@ -92,14 +92,14 @@
 
             if (To < From)
             {
-                throw new ArgumentException("The address to start from is superior to the end address.");
+                throw new ArgumentException("The address to start from is superior to the end address");
             }
 
             var Size = (long) To - (long) From;
 
             if (Size <= 0)
             {
-                throw new ArgumentException("The address range is inferior or equal to zero.", nameof(Size));
+                throw new ArgumentException("The address range is inferior or equal to zero", nameof(Size));
             }
 
             const uint BufferSize   = 2048;

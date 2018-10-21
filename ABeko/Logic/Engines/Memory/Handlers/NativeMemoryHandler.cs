@@ -65,12 +65,12 @@
 
             if (Address >= 0x7FFFFFFFFFF)
             {
-                throw new ArgumentException("Address is outside userspace virtual memory range.");
+                throw new ArgumentException("Address is outside userspace virtual memory range");
             }
 
             if (Address + Size > 0x7FFFFFFFFFF)
             {
-                throw new ArgumentException("Address plus size is outside userspace virtual memory range.");
+                throw new ArgumentException("Address plus size is outside userspace virtual memory range");
             }
 
             var Buffer      = new byte[Size];
@@ -78,7 +78,7 @@
 
             if (!ReadProcessMemory(this.Handle, Address, Buffer, Size, ref Read))
             {
-                throw new Exception("Failed to read memory from remote process.");
+                throw new Exception("Failed to read memory from remote process");
             }
 
             return Buffer;
@@ -100,7 +100,7 @@
 
             if (Allocation == IntPtr.Zero)
             {
-                throw new InsufficientMemoryException("Couldn't allocate memory for the buffer.");
+                throw new InsufficientMemoryException("Couldn't allocate memory for the buffer");
             }
 
             var Success     = ReadProcessMemory(this.Handle, Address, Buffer, (uint) Size, ref Read);
@@ -114,7 +114,7 @@
 
             if (!Success)
             {
-                throw new Exception("Failed to read memory from remote process.");
+                throw new Exception("Failed to read memory from remote process");
             }
 
             return Buffer;

@@ -3,6 +3,7 @@
     using System;
 
     using ABeko.Interfaces;
+    using ABeko.Logic.Collections;
 
     public partial class MemoryEngine : IDisposable
     {
@@ -22,6 +23,15 @@
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets the current process loaded modules.
+        /// </summary>
+        public Modules Modules
+        {
+            get;
+            private set;
         }
 
         /// <summary>
@@ -54,7 +64,7 @@
         /// </summary>
         private MemoryEngine()
         {
-            // MemoryEngine
+            this.Modules = new Modules();
         }
 
         /// <summary>
@@ -75,7 +85,7 @@
         {
             if (this.IsDisposed)
             {
-                throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed.");
+                throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
             }
 
             if (BekoEngine == null)

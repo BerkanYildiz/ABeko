@@ -112,6 +112,10 @@
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\folder-icon.png" />
+    <Resource Include="Images\search-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>DEL /S "$(TargetDir)*.xml"

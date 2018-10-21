@@ -5,6 +5,8 @@
     using System.Threading.Tasks;
 
     using ABeko.Logic;
+    using ABeko.Logic.Engines.Memory.Handlers;
+    using ABeko.Logic.Types;
 
     internal static class Program
     {
@@ -17,7 +19,7 @@
             var EngineConfig    = new BekoConfig
             {
                  Process        = Process.GetCurrentProcess(),
-                 MemoryHandler  = null
+                 MemoryHandler  = new NativeMemoryHandler()
             };
 
             // ..
@@ -35,30 +37,27 @@
 
             if (Engine != null)
             {
-                Console.WriteLine("[*] Engine initialized.");
-
                 using (Engine)
                 {
+                    var Scanner = Engine.ScannerEngine;
                     var Memory  = Engine.MemoryEngine;
+                    var Command = Console.ReadLine();
 
-                    if (Memory != null)
+                    while (true)
                     {
-                        Console.WriteLine("[*] MemoryEngine initialized.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("[*] MemoryEngine failed to initialize.");
+                        switch (Command)
+                        {
+
+                        }
                     }
                 }
-
-                Console.WriteLine("[*] Engine disposed.");
             }
             else
             {
-                Console.WriteLine("[*] Engine failed to initialize.");
+                Console.WriteLine("[*] The engine failed to initialize.");
             }
 
-            Console.ReadKey(false);
+            await Task.Delay(500);
         }
     }
 }

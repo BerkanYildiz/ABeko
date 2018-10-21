@@ -5,8 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ABeko.GUI"
         mc:Ignorable="d"
-        Height="450" Width="800">
+        Height="650" Width="600" Topmost="True" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <StatusBar Margin="0,0,0,-1" Height="20" VerticalAlignment="Bottom" >
+            <StatusBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </StatusBar.RenderTransform>
+        </StatusBar>
+        <DataGrid x:Name="ObservedAddresses" Margin="0,0,0,19" Height="150" VerticalAlignment="Bottom" IsSynchronizedWithCurrentItem="False" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" GridLinesVisibility="Horizontal" BorderThickness="0,1" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{x:Null}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Active"/>
+                <DataGridTextColumn Binding="{x:Null}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Description"/>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Address"/>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Type"/>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Value"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Margin="0,0,0,169">
+            <DataGrid HorizontalAlignment="Left" Margin="0,30,0,0" Width="225" BorderThickness="0,1,1,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Address"/>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Value"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Height="30" VerticalAlignment="Top">
+                <Button x:Name="SearchButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Images/search-icon.png" Stretch="UniformToFill"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="FileButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" BorderBrush="{x:Null}" Foreground="{x:Null}" Margin="35,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Images/folder-icon.png" Stretch="Uniform"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+            <Grid Margin="225,188,0,0">
+                <Label Content="Value :" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="92" HorizontalContentAlignment="Right" FontWeight="Bold" Height="23" VerticalContentAlignment="Center" FontSize="11"/>
+                <TextBox Margin="0,69,10,0" TextWrapping="Wrap" HorizontalAlignment="Right" Width="252" Height="23" VerticalAlignment="Top"/>
+                <Label Content="Value Type :" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" Width="92" HorizontalContentAlignment="Right" FontWeight="Bold" Height="23" VerticalContentAlignment="Center" FontSize="11"/>
+                <ComboBox HorizontalAlignment="Right" Margin="0,97,10,0" VerticalAlignment="Top" Width="252" Height="23" SelectedIndex="0">
+
+                </ComboBox>
+                <Label Content="Scan Type :" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="92" HorizontalContentAlignment="Right" FontWeight="Bold" Height="23" VerticalContentAlignment="Center" FontSize="11"/>
+                <ComboBox HorizontalAlignment="Right" Margin="0,125,10,0" VerticalAlignment="Top" Width="252" Height="23">
+
+                </ComboBox>
+                <Label Content="Scan Range :" HorizontalAlignment="Left" Margin="10,153,0,0" VerticalAlignment="Top" Width="92" HorizontalContentAlignment="Right" FontWeight="Bold" Height="23" VerticalContentAlignment="Center" FontSize="11"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="107,153,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="115"/>
+                <Label Content=" - " HorizontalAlignment="Left" Margin="222,153,0,0" VerticalAlignment="Top" Width="22" HorizontalContentAlignment="Center" FontWeight="Bold" Height="23" VerticalContentAlignment="Center" FontSize="11"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="244,153,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="115"/>
+            </Grid>
+            <Grid Margin="225,30,0,264"/>
+        </Grid>
+
     </Grid>
 </Window>

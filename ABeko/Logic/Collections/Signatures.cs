@@ -16,6 +16,17 @@
         }
 
         /// <summary>
+        /// Gets the length of the dictionnary.
+        /// </summary>
+        public uint Length
+        {
+            get
+            {
+                return (uint) this.Dictionnary.Count;
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Signatures"/> class.
         /// </summary>
         public Signatures()
@@ -27,6 +38,7 @@
         /// Adds the specified signature.
         /// </summary>
         /// <param name="Signature">The signature.</param>
+        /// <exception cref="System.ArgumentNullException">Signature is empty.</exception>
         /// <exception cref="System.Exception">Signature is already in the dictionnary.</exception>
         public void Add(Signature Signature)
         {
@@ -37,16 +49,32 @@
 
             if (this.Dictionnary.ContainsKey(Signature.Name))
             {
-                throw new Exception("Signature is already in the dictionnary.");
+                throw new Exception("Signature is already in the dictionnary");
             }
 
             this.Dictionnary.Add(Signature.Name, Signature);
         }
 
         /// <summary>
+        /// Gets a value indicating whether the specified signature name is in the dictionnary.
+        /// </summary>
+        /// <param name="Name">The name of the signature.</param>
+        /// <exception cref="System.ArgumentNullException">Signature is empty.</exception>
+        public bool Exists(string Name)
+        {
+            if (string.IsNullOrEmpty(Name))
+            {
+                throw new ArgumentNullException(nameof(Name));
+            }
+
+            return this.Dictionnary.ContainsKey(Name);
+        }
+
+        /// <summary>
         /// Gets the specified signature.
         /// </summary>
         /// <param name="Name">The name of the signature.</param>
+        /// <exception cref="System.ArgumentNullException">Signature is empty.</exception>
         /// <exception cref="System.Exception">Signature is already in the dictionnary.</exception>
         public Signature Get(string Name)
         {
@@ -57,7 +85,7 @@
 
             if (!this.Dictionnary.ContainsKey(Name))
             {
-                throw new Exception("Signature is not in the dictionnary.");
+                throw new Exception("Signature is not in the dictionnary");
             }
 
             return this.Dictionnary[Name];
@@ -67,7 +95,7 @@
         /// Removes the specified signature.
         /// </summary>
         /// <param name="Signature">The signature.</param>
-        /// <exception cref="System.Exception">Signature is already in the dictionnary.</exception>
+        /// <exception cref="System.ArgumentNullException">Signature is empty.</exception>
         public void Remove(Signature Signature)
         {
             if (Signature == null)
@@ -82,7 +110,8 @@
         /// Removes the specified signature.
         /// </summary>
         /// <param name="Name">The name of the signature.</param>
-        /// <exception cref="System.Exception">Signature is already in the dictionnary.</exception>
+        /// <exception cref="System.ArgumentNullException">Signature is empty.</exception>
+        /// <exception cref="System.Exception">Signature is not in the dictionnary.</exception>
         public void Remove(string Name)
         {
             if (string.IsNullOrEmpty(Name))
@@ -92,7 +121,7 @@
 
             if (!this.Dictionnary.ContainsKey(Name))
             {
-                throw new Exception("Signature is not in the dictionnary.");
+                throw new Exception("Signature is not in the dictionnary");
             }
 
             this.Dictionnary.Remove(Name);

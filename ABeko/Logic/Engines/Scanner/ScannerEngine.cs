@@ -85,7 +85,7 @@
         {
             if (this.IsDisposed)
             {
-                throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed.");
+                throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
             }
 
             if (BekoEngine == null)
