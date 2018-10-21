@@ -37,16 +37,20 @@
             {
                 return;
             }
-            else
+
+            if (this.LastProcessId > 0)
             {
-                if (this.LastProcessId > 0)
-                {
-                    NativeMemoryHandler.CloseHandle(this.Handle);
-                }
+                Log.Info(typeof(NativeMemoryHandler), "Closing process handle.");
+                NativeMemoryHandler.CloseHandle(this.Handle);
             }
 
             if (ProcId <= 0)
             {
+                if (ProcId == -1)
+                {
+                    return;
+                }
+                
                 throw new ArgumentException("ProcId is inferior or equal to 0", nameof(ProcId));
             }
 
@@ -62,7 +66,7 @@
         public byte[] Read(ulong Address, uint Size, bool UseBaseAddress = false)
         {
             Log.Info(typeof(NativeMemoryHandler), "Reading " + Size + " bytes at 0x" + Address.ToString("X").PadLeft(16, '0') + ".");
-
+            
             if (Address >= 0x7FFFFFFFFFF)
             {
                 throw new ArgumentException("Address is outside userspace virtual memory range");

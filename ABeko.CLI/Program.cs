@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using ABeko.CLI.Logic;
+    using ABeko.CLI.Logic.Commands;
     using ABeko.Logic;
     using ABeko.Logic.Engines.Memory.Handlers;
 
@@ -22,7 +23,8 @@
         /// <summary>
         /// Defines the entry point of this application.
         /// </summary>
-        private static async Task Main()
+        /// <param name="Arguments">The CLI arguments.</param>
+        private static async Task Main(string[] Arguments)
         {
             var EngineConfig    = new BekoConfig
             {
@@ -45,6 +47,11 @@
 
             if (Engine != null)
             {
+                if (Arguments.Length == 0)
+                {
+                    HelpCommand.Execute(null);
+                }
+
                 Console.Write("[*] > ");
 
                 using (Engine)

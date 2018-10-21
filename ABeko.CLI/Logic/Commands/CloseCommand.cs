@@ -1,8 +1,6 @@
 ﻿namespace ABeko.CLI.Logic.Commands
 {
     using System;
-    using System.Diagnostics;
-    using System.Linq;
 
     using ABeko.Logic;
 
@@ -25,7 +23,23 @@
         /// <param name="Parameters">The parameters.</param>
         internal static void Execute(params string[] Parameters)
         {
+            if (CloseCommand.Engine.Configuration.Process != null)
+            {
+                CloseCommand.Engine.RemoveProcess();
 
+                if (CloseCommand.Engine.Configuration.Process == null)
+                {
+                    Console.WriteLine("[*] Process has been closed.");
+                }
+                else
+                {
+                    Console.WriteLine("[*] Failed to close the process.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("[*] No processes are opened, to be closed.");
+            }
         }
     }
 }

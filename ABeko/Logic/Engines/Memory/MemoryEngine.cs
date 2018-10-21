@@ -46,7 +46,7 @@
                     return null;
                 }
 
-                return this.BekoEngine.MemoryHandler;
+                return this.BekoEngine.Configuration.MemoryHandler;
             }
         }
 

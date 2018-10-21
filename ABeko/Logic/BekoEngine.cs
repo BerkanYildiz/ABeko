@@ -57,64 +57,6 @@
         }
 
         /// <summary>
-        /// Gets the targeted process from the configuration.
-        /// </summary>
-        public Process Process
-        {
-            get
-            {
-                if (this.IsDisposed)
-                {
-                    throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
-                }
-
-                if (this.Configuration == null)
-                {
-                    return null;
-                }
-
-                return this.Configuration.Process;
-            }
-            set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
-
-                this.Configuration.Process = value;
-
-                if (this.Configuration.MemoryHandler == null)
-                {
-                    throw new Exception("MemoryHandler was null when setting process.");
-                }
-
-                this.Configuration.MemoryHandler.SetProcId(value.Id);
-            }
-        }
-
-        /// <summary>
-        /// Gets the memory handler from the configuration.
-        /// </summary>
-        public IMemory MemoryHandler
-        {
-            get
-            {
-                if (this.IsDisposed)
-                {
-                    throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
-                }
-
-                if (this.Configuration == null)
-                {
-                    return null;
-                }
-
-                return this.Configuration.MemoryHandler;
-            }
-        }
-
-        /// <summary>
         /// Gets a value indicating whether this instance is loaded.
         /// </summary>
         public bool IsLoaded
@@ -182,10 +124,7 @@
             }
 
             this.Configuration = Configuration;
-
-            // ..
-
-            Configuration.MemoryHandler.SetProcId(Configuration.Process.Id);
+            this.SetProcess(Configuration.Process, true);
         }
 
         /// <summary>
@@ -193,19 +132,45 @@
         /// </summary>
         /// <param name="Process">The process.</param>
         /// <exception cref="ArgumentNullException">Process</exception>
-        public void SetProcess(Process Process)
+        public void SetProcess(Process Process, bool FromConfig = false)
         {
             if (Process == null)
             {
                 throw new ArgumentNullException(nameof(Process));
             }
 
-            if (this.Process == Process)
+            if (this.Configuration.Process == Process)
             {
-                return;
+                if (!FromConfig)
+                {
+                    return;
+                }
             }
 
             this.Configuration.Process = Process;
+
+            if (this.Configuration.MemoryHandler == null)
+            {
+                throw new Exception("Configuration->MemoryHandler is null when setting the process");
+            }
+
+            this.Configuration.MemoryHandler.SetProcId(Process.Id);
+        }
+
+        /// <summary>
+        /// Unsets the process.
+        /// </summary>
+        /// <param name="Process">The process.</param>
+        /// <exception cref="ArgumentNullException">Process</exception>
+        public void RemoveProcess()
+        {
+            if (this.Configuration.Process == null)
+            {
+                throw new Exception("Configuration->Process is null at RemoveProcess");
+            }
+
+            this.Configuration.Process = null;
+            this.Configuration.MemoryHandler.SetProcId(-1);
         }
 
         /// <summary>

@@ -27,5 +27,14 @@
 
             return false;
         }
+
+        /// <summary>
+        /// Trims the specified hexadecimal string.
+        /// </summary>
+        /// <param name="Hex">The hexadecimal.</param>
+        internal static void TrimHex(this string Hex)
+        {
+            Hex = Hex.Replace("-", "").Replace("0x", "").Replace(",", "").Trim();
+        }
     }
 }
