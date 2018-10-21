@@ -67,12 +67,12 @@
         {
             Log.Info(typeof(NativeMemoryHandler), "Reading " + Size + " bytes at 0x" + Address.ToString("X").PadLeft(16, '0') + ".");
             
-            if (Address >= 0x7FFFFFFFFFF)
+            if (Address >= 0x7FFFFFFFFFFF)
             {
                 throw new ArgumentException("Address is outside userspace virtual memory range");
             }
 
-            if (Address + Size > 0x7FFFFFFFFFF)
+            if (Address + Size > 0x7FFFFFFFFFFF)
             {
                 throw new ArgumentException("Address plus size is outside userspace virtual memory range");
             }

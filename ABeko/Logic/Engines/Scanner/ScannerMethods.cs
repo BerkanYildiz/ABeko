@@ -31,7 +31,7 @@
         /// <param name="SignatureName">The signature name.</param>
         /// <param name="From">The address used to start the scan.</param>
         /// <param name="To">The address used to end the scan.</param>
-        public SignatureResult SearchFor(string SignatureName, ulong From = 0x400000, ulong To = 0x000007FFFFFFFFFF)
+        public SignatureResult SearchFor(string SignatureName, ulong From, ulong To)
         {
             if (this.IsDisposed)
             {
@@ -102,16 +102,16 @@
                 throw new ArgumentException("The address range is inferior or equal to zero", nameof(Size));
             }
 
-            const uint BufferSize   = 2048;
+            const uint BufferSize   = 4096;
             var Result              = new SignatureResult(Signature);
 
             for (ulong I = 0; I < (ulong) Size;)
             {
                 var Address = From + I;
+                var EndAddr = From + I + BufferSize;
                 var Buffer  = (byte[]) null;
 
                 Log.Info(typeof(ScannerEngine), "Scanning bytes at 0x" + Address.ToString("X").PadLeft(16, '0') + ".");
-                Log.Info(typeof(ScannerEngine), " - Retrieving " + Size + " bytes..");
 
                 try
                 {
@@ -121,21 +121,43 @@
                     }
                     else
                     {
-                        Log.Info(typeof(ScannerEngine), " -- Falling back to " + (BufferSize - Signature.Length) + " bytes instead..");
-
-                        Buffer = this.MemoryEngine.Handler.Read(Address, BufferSize);
-                        I      = I + BufferSize - Signature.Length;
+                        if (EndAddr > To)
+                        {
+                            Buffer = this.MemoryEngine.Handler.Read(Address, (uint) (BufferSize - (EndAddr - To)));
+                        }
+                        else
+                        {
+                            Buffer = this.MemoryEngine.Handler.Read(Address, BufferSize);
+                        }
                     }
                 }
                 catch (Exception Exception)
                 {
                     // ..
                 }
+                finally
+                {
+                    if (Size < BufferSize)
+                    {
+                        I     += (ulong) Size;
+                    }
+                    else
+                    {
+                        if (EndAddr > To)
+                        {
+                            I     += (BufferSize - (EndAddr - To));
+                        }
+                        else
+                        {
+                            I     += (BufferSize);
+                        }
+                    }
+                }
 
                 if (Buffer == null)
                 {
                     Result.IsErrored = true;
-                    break;
+                    continue;
                 }
 
                 if (TrySearchInBuffer(Signature, Buffer, out var Offset))
@@ -185,15 +207,20 @@
                 throw new ArgumentException("The address range is inferior or equal to zero", nameof(Size));
             }
 
-            const uint BufferSize   = 2048;
+            if (Size < Signature.Length)
+            {
+                throw new ArgumentException("The memory range to search in is inferior than the size of the signature.");
+            }
+
+            const uint BufferSize   = 4096;
 
             for (ulong I = 0; I < (ulong) Size;)
             {
                 var Address = From + I;
+                var EndAddr = From + I + BufferSize;
                 var Buffer  = (byte[]) null;
 
                 Log.Info(typeof(ScannerEngine), "Scanning bytes at 0x" + Address.ToString("X").PadLeft(16, '0') + ".");
-                Log.Info(typeof(ScannerEngine), " - Retrieving " + Size + " bytes..");
 
                 try
                 {
@@ -203,20 +230,42 @@
                     }
                     else
                     {
-                        Log.Info(typeof(ScannerEngine), " -- Falling back to " + (BufferSize - Signature.Length) + " bytes instead..");
-
-                        Buffer = this.MemoryEngine.Handler.Read(Address, BufferSize);
-                        I      = I + BufferSize - (uint) Signature.Length;
+                        if (EndAddr > To)
+                        {
+                            Buffer = this.MemoryEngine.Handler.Read(Address, (uint) (BufferSize - (EndAddr - To)));
+                        }
+                        else
+                        {
+                            Buffer = this.MemoryEngine.Handler.Read(Address, BufferSize);
+                        }
                     }
                 }
                 catch (Exception Exception)
                 {
                     // ..
                 }
+                finally
+                {
+                    if (Size < BufferSize)
+                    {
+                        I     += (ulong) Size;
+                    }
+                    else
+                    {
+                        if (EndAddr > To)
+                        {
+                            I     += (BufferSize - (EndAddr - To));
+                        }
+                        else
+                        {
+                            I     += (BufferSize);
+                        }
+                    }
+                }
 
                 if (Buffer == null)
                 {
-                    break;
+                    continue;
                 }
 
                 if (TrySearchInBuffer(Signature, Buffer, out var Offset))

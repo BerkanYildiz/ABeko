@@ -39,15 +39,37 @@
 
             if (Parameters.Length < 7)
             {
-                //   Usage  : <command> -from 000000 -to 0000000 -type int [if -type == custom | -size 4] <value>
-                // Examples : scan -from 0x0000000000000000 -to 0x0000000000007FFF -type int 123456
-                // Examples : scan -from 0x0000000000000000 -to 0x0000000000007FFF -type int 123456
+                //   Usage  : <command> -from <address> -to <address> -type <value type> <value>
+                // Examples : scan -from 0x400000 -to 0x400008 -type string MZ
+                // Examples : scan -from 0x7ffcad880000 -to 0x7ffcad887000 -type string RichB
 
                 Console.WriteLine("[*] Invalid number of arguments.");
             }
             else
             {
                 ValueS            = Parameters[Parameters.Length - 1];
+
+                if (ValueS.EndsWith("\""))
+                {
+                    for (int i = 0; i < Parameters.Length - 1; i++)
+                    {
+                        if (Parameters[i].StartsWith("\""))
+                        {
+                            for (int X = i; X < Parameters.Length - 1; X++)
+                            {
+                                ValueS = Parameters[X] + ValueS;
+                            }
+                            
+                            break;
+                        }
+                    }
+                }
+
+                if (ValueS.StartsWith("\"") && ValueS.EndsWith("\""))
+                {
+                    ValueS = ValueS.Substring(1);
+                    ValueS = ValueS.Substring(0, ValueS.Length - 1);
+                }
 
                 for (int i = 0; i < Parameters.Length - 1; i++)
                 {
@@ -115,6 +137,7 @@
                     if (!Parameters.Contains("-to"))
                     {
                         From = 0x7FFFFFFFFFF;
+                        //   = 0x7FFFFFFFFFFF
                     }
                 }
                 
@@ -123,8 +146,8 @@
                     Console.WriteLine("[*] Invalid arguments, -from value is inferior or equal to -to value.");
                     return;
                 }
-                
-                if (To >= 0x7FFFFFFFFFF)
+
+                if (To > 0x7FFFFFFFFFFF)
                 {
                     Console.WriteLine("[*] Invalid arguments, -to value is superior to the maximum address for the user-space virtual memory.");
                     return;
@@ -495,7 +518,8 @@
                 catch (Exception Exception)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("[*] The scan engine threw a " + Exception.GetType().Name + ".");
+                    Console.WriteLine("[*] The scan engine threw an " + Exception.GetType().Name + ".");
+                    Console.WriteLine("[*] It says : \"" + Exception.Message + "\".");
                     Console.ResetColor();
                 }
             }
