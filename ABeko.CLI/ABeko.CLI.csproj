@@ -53,6 +53,7 @@
     <Compile Include="Logic\Commands\OpenCommand.cs" />
     <Compile Include="Logic\Commands\ClearCommand.cs" />
     <Compile Include="Logic\Commands\HelpCommand.cs" />
+    <Compile Include="Logic\Commands\TestCommand.cs" />
     <Compile Include="Logic\Commands\ScanCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,7 +3,6 @@
     using System;
     using System.Diagnostics;
 
-    using ABeko.Interfaces;
     using ABeko.Logic.Engines;
     using ABeko.Logic.Engines.Memory;
 
@@ -123,6 +122,11 @@
                 throw new ArgumentNullException(nameof(Configuration.MemoryHandler), "Configuration->MemoryHandler is null");
             }
 
+            if (Configuration.RequestsHandler == null)
+            {
+                throw new ArgumentNullException(nameof(Configuration.MemoryHandler), "Configuration->RequestsHandler is null");
+            }
+
             this.Configuration = Configuration;
             this.SetProcess(Configuration.Process, true);
         }
@@ -154,7 +158,13 @@
                 throw new Exception("Configuration->MemoryHandler is null when setting the process");
             }
 
+            if (this.Configuration.RequestsHandler == null)
+            {
+                throw new Exception("Configuration->RequestsHandler is null when setting the process");
+            }
+
             this.Configuration.MemoryHandler.SetProcId(Process.Id);
+            this.Configuration.RequestsHandler.SetProcId(Process.Id);
         }
 
         /// <summary>
@@ -170,7 +180,19 @@
             }
 
             this.Configuration.Process = null;
-            this.Configuration.MemoryHandler.SetProcId(-1);
+
+            if (this.Configuration.MemoryHandler == null)
+            {
+                throw new Exception("Configuration->MemoryHandler is null when removing the process");
+            }
+
+            if (this.Configuration.RequestsHandler == null)
+            {
+                throw new Exception("Configuration->RequestsHandler is null when removing the process");
+            }
+
+            this.Configuration.RequestsHandler.SetProcId(0);
+            this.Configuration.MemoryHandler.SetProcId(0);
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace ABeko.Logic.Enum
+﻿namespace ABeko.Logic.Enums
 {
     public enum MaskChar
     {

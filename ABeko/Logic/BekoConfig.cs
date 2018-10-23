@@ -2,7 +2,7 @@
 {
     using System.Diagnostics;
 
-    using ABeko.Interfaces;
+    using ABeko.Logic.Interfaces;
 
     public class BekoConfig
     {
@@ -18,7 +18,16 @@
         /// <summary>
         /// Gets or sets the memory handler.
         /// </summary>
-        public IMemory MemoryHandler
+        public IMemoryHandler MemoryHandler
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the requests handler.
+        /// </summary>
+        public IRequestsHandler RequestsHandler
         {
             get;
             set;

@@ -40,18 +40,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\HexExtensions.cs" />
-    <Compile Include="Interfaces\IMemory.cs" />
+    <Compile Include="Logic\Interfaces\IRequestsHandler.cs" />
+    <Compile Include="Logic\Interfaces\IMemoryHandler.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Logic\BekoConfig.cs" />
     <Compile Include="Logic\BekoEngine.cs" />
     <Compile Include="Logic\Collections\Modules.cs" />
     <Compile Include="Logic\Collections\Signatures.cs" />
     <Compile Include="Logic\Engines\Memory\Handlers\NativeMemoryHandler.cs" />
+    <Compile Include="Logic\Engines\Memory\Handlers\NativeRequestsHandler.cs" />
+    <Compile Include="Logic\Engines\Scanner\Events\ScanInfoEvent.cs" />
     <Compile Include="Logic\Engines\Scanner\ScannerMethods.cs" />
     <Compile Include="Logic\Engines\Memory\MemoryMethods.cs" />
     <Compile Include="Logic\Engines\Scanner\ScannerEngine.cs" />
     <Compile Include="Logic\Engines\Memory\MemoryEngine.cs" />
-    <Compile Include="Logic\Enum\MaskChar.cs" />
+    <Compile Include="Logic\Enums\MaskChar.cs" />
+    <Compile Include="Logic\Native\Enums\MemoryPageType.cs" />
+    <Compile Include="Logic\Native\Enums\MemoryPageState.cs" />
+    <Compile Include="Logic\Native\Enums\MemoryPagePermissions.cs" />
+    <Compile Include="Logic\Native\Enums\ProcessorArchitecture.cs" />
+    <Compile Include="Logic\Native\MemoryBasicInformation.cs" />
+    <Compile Include="Logic\Native\SystemInfo.cs" />
     <Compile Include="Logic\Types\SignatureResult.cs" />
     <Compile Include="Logic\Types\SignatureMask.cs" />
     <Compile Include="Logic\Types\Signature.cs" />

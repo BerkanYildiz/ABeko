@@ -2,7 +2,7 @@
 {
     using System;
 
-    using ABeko.Logic.Enum;
+    using ABeko.Logic.Enums;
 
     public class SignatureMask
     {

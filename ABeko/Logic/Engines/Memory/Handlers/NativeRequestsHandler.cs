@@ -6,8 +6,9 @@
     using System.Security;
 
     using ABeko.Logic.Interfaces;
+    using ABeko.Logic.Native;
 
-    public class NativeMemoryHandler : IMemoryHandler
+    public class NativeRequestsHandler : IRequestsHandler
     {
         /// <summary>
         /// Gets or sets the event invoked when this instance is disposed.
@@ -26,7 +27,7 @@
             get;
             private set;
         }
-
+        
         /// <summary>
         /// Gets or sets the selected process identifier.
         /// </summary>
@@ -35,7 +36,7 @@
             get;
             private set;
         }
-
+        
         /// <summary>
         /// Gets or sets the process handle.
         /// </summary>
@@ -46,11 +47,11 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NativeMemoryHandler"/> class.
+        /// Initializes a new instance of the <see cref="NativeRequestsHandler"/> class.
         /// </summary>
-        public NativeMemoryHandler()
+        public NativeRequestsHandler()
         {
-            // NativeMemoryHandler
+            // NativeRequestsHandler
         }
 
         /// <summary>
@@ -85,86 +86,35 @@
         }
 
         /// <summary>
-        /// Reads bytes at the specified address and returns it.
+        /// Gets the current system information.
         /// </summary>
-        /// <param name="Address">The address.</param>
-        /// <param name="Size">The size.</param>
-        public byte[] Read(ulong Address, uint Size)
+        public bool TryGetSystemInfo(out SystemInfo SystemInfo)
         {
-            if (this.IsDisposed)
-            {
-                throw new ObjectDisposedException(nameof(BekoEngine), "The memory handler is disposed");
-            }
-            
-            if (Address >= 0x7FFFFFFFFFFF)
-            {
-                throw new ArgumentException("Address is outside userspace virtual memory range");
-            }
-
-            if (Address + Size > 0x7FFFFFFFFFFF)
-            {
-                throw new ArgumentException("Address plus size is outside userspace virtual memory range");
-            }
-
-            var Buffer      = new byte[Size];
-            var Read        = 0u;
-
-            if (!ReadProcessMemory(this.Handle, Address, Buffer, Size, ref Read))
-            {
-                throw new Exception("Failed to read memory from remote process");
-            }
-
-            return Buffer;
+            GetSystemInfo(out SystemInfo);
+            return true;
         }
 
         /// <summary>
-        /// Reads bytes at the specified address and returns a structure from it.
+        /// Gets the memory region information of a 64 bits process.
         /// </summary>
         /// <param name="Address">The address.</param>
-        public T Read<T>(ulong Address)
+        /// <exception cref="ArgumentException">Address is equal to zero</exception>
+        public bool TryGetMemoryRegionInfo(ulong Address, out MemoryBasicInformation RegionInfo)
         {
-            if (this.IsDisposed)
+            if (Address == 0)
             {
-                throw new ObjectDisposedException(nameof(BekoEngine), "The memory handler is disposed");
+                throw new ArgumentException("Address is equal to zero");
             }
 
-            if (Address >= 0x7FFFFFFFFFFF)
-            {
-                throw new ArgumentException("Address is outside userspace virtual memory range");
-            }
-            
-            var Size        = Marshal.SizeOf<T>();
-
-            if (Address + (ulong) Size > 0x7FFFFFFFFFFF)
-            {
-                throw new ArgumentException("Address plus size is outside userspace virtual memory range");
-            }
-
-            var Buffer      = default(T);
-            
-            var Allocation  = Marshal.AllocHGlobal(Size);
-            var Read        = 0u;
-
-            if (Allocation == IntPtr.Zero)
-            {
-                throw new InsufficientMemoryException("Couldn't allocate memory for the buffer");
-            }
-
-            var Success     = ReadProcessMemory(this.Handle, Address, Buffer, (uint) Size, ref Read);
-            
-            if (Success)
-            {
-                Buffer      = Marshal.PtrToStructure<T>(Allocation);
-            }
-
-            Marshal.FreeHGlobal(Allocation);
+            var Size    = (uint) Marshal.SizeOf<MemoryBasicInformation>();
+            var Success = VirtualQueryEx(this.Handle, Address, out RegionInfo, Size) > 0;
 
             if (!Success)
             {
-                throw new Exception("Failed to read memory from remote process");
+                return false;
             }
 
-            return Buffer;
+            return true;
         }
 
         /// <summary>
@@ -198,7 +148,7 @@
                 }
             }
         }
-
+        
         #region Externs
 
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -207,11 +157,17 @@
         [DllImport("kernel32.dll")] 
         private static extern bool ReadProcessMemory(IntPtr Handle, ulong Address, [Out, MarshalAs(UnmanagedType.AsAny)] object Buffer, uint Size, ref uint NumberOfBytesRead);
 
-        [DllImport("kernel32.dll", SetLastError=true)]
+        [DllImport("kernel32.dll", SetLastError = true)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         [SuppressUnmanagedCodeSecurity]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool CloseHandle(IntPtr Handle);
+
+        [DllImport("kernel32.dll")]
+        private static extern void GetSystemInfo(out SystemInfo SystemInfo);
+
+        [DllImport("kernel32.dll")] 
+        private static extern int VirtualQueryEx(IntPtr Handle, ulong Address, out MemoryBasicInformation Buffer, uint Length);
 
         #endregion
     }

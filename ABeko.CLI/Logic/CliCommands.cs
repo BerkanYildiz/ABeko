@@ -27,6 +27,7 @@
             CliCommands.AvailableCommands.Add("open", OpenCommand.Execute);
             CliCommands.AvailableCommands.Add("close", CloseCommand.Execute);
             CliCommands.AvailableCommands.Add("scan", ScanCommand.Execute);
+            CliCommands.AvailableCommands.Add("test", TestCommand.Execute);
         }
 
         /// <summary>

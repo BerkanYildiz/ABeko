@@ -28,8 +28,9 @@
         {
             var EngineConfig    = new BekoConfig
             {
-                 Process        = Process.GetCurrentProcess(),
-                 MemoryHandler  = new NativeMemoryHandler()
+                Process         = Process.GetCurrentProcess(),
+                MemoryHandler   = new NativeMemoryHandler(),
+                RequestsHandler = new NativeRequestsHandler()
             };
 
             // ..

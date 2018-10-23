@@ -2,8 +2,8 @@
 {
     using System;
 
-    using ABeko.Interfaces;
     using ABeko.Logic.Collections;
+    using ABeko.Logic.Interfaces;
 
     public partial class MemoryEngine : IDisposable
     {
@@ -37,7 +37,7 @@
         /// <summary>
         /// Gets the memory handler.
         /// </summary>
-        public IMemory Handler
+        public IMemoryHandler MemoryHandler
         {
             get
             {
@@ -47,6 +47,22 @@
                 }
 
                 return this.BekoEngine.Configuration.MemoryHandler;
+            }
+        }
+
+        /// <summary>
+        /// Gets the requests handler.
+        /// </summary>
+        public IRequestsHandler RequestsHandler
+        {
+            get
+            {
+                if (this.BekoEngine == null)
+                {
+                    return null;
+                }
+
+                return this.BekoEngine.Configuration.RequestsHandler;
             }
         }
 

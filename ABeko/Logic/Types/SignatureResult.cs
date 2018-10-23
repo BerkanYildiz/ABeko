@@ -77,10 +77,9 @@
         /// Sets the address.
         /// </summary>
         /// <param name="Address">The address.</param>
-        internal void SetAddress(ulong Address = 0)
+        internal void SetAddress(ulong Address)
         {
             this.Address = Address;
-            this.IsFound = true;
         }
     }
 }
