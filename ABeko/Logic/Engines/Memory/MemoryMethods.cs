@@ -17,7 +17,12 @@
                 throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
             }
 
-            if (!this.RequestsHandler.TryGetSystemInfo(out var SystemInfo))
+            if (this.BekoEngine.RequestsHandler == null)
+            {
+                throw new Exception("RequestsHandler was null");
+            }
+
+            if (!this.BekoEngine.RequestsHandler.TryGetSystemInfo(out var SystemInfo))
             {
                 throw new Exception("Failed to retrieve the current system information");
             }
@@ -37,7 +42,12 @@
                 throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
             }
 
-            if (!this.RequestsHandler.TryGetSystemInfo(out var SystemInfo))
+            if (this.BekoEngine.RequestsHandler == null)
+            {
+                throw new Exception("RequestsHandler was null");
+            }
+
+            if (!this.BekoEngine.RequestsHandler.TryGetSystemInfo(out var SystemInfo))
             {
                 throw new Exception("Failed to retrieve the current system information");
             }
@@ -75,13 +85,18 @@
                 throw new ObjectDisposedException(nameof(BekoEngine), "The engine is disposed");
             }
 
+            if (this.BekoEngine.RequestsHandler == null)
+            {
+                throw new Exception("RequestsHandler was null");
+            }
+
             if (From >= To)
             {
                 throw new ArgumentException("The from parameter is superior or equal to the to parameter");
             }
 
             var MemoryRegions = new List<MemoryBasicInformation>();
-            var Requests      = this.RequestsHandler;
+            var Requests      = this.BekoEngine.RequestsHandler;
 
             if (From < (ulong) SystemInfo.MinimumApplicationAddress)
             {

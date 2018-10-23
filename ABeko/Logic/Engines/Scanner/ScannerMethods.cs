@@ -176,17 +176,17 @@
                 {
                     if (Size < BufferSize)
                     {
-                        Buffer = this.MemoryEngine.MemoryHandler.Read(Address, (uint) Size);
+                        Buffer = this.BekoEngine.MemoryHandler.Read(Address, (uint) Size);
                     }
                     else
                     {
                         if (EndAddr > To)
                         {
-                            Buffer = this.MemoryEngine.MemoryHandler.Read(Address, (uint) (BufferSize - (EndAddr - To)));
+                            Buffer = this.BekoEngine.MemoryHandler.Read(Address, (uint) (BufferSize - (EndAddr - To)));
                         }
                         else
                         {
-                            Buffer = this.MemoryEngine.MemoryHandler.Read(Address, BufferSize);
+                            Buffer = this.BekoEngine.MemoryHandler.Read(Address, BufferSize);
                         }
                     }
                 }
@@ -328,17 +328,17 @@
                 {
                     if (Size < BufferSize)
                     {
-                        Buffer = this.MemoryEngine.MemoryHandler.Read(Address, (uint) Size);
+                        Buffer = this.BekoEngine.MemoryHandler.Read(Address, (uint) Size);
                     }
                     else
                     {
                         if (EndAddr > To)
                         {
-                            Buffer = this.MemoryEngine.MemoryHandler.Read(Address, (uint) (BufferSize - (EndAddr - To)));
+                            Buffer = this.BekoEngine.MemoryHandler.Read(Address, (uint) (BufferSize - (EndAddr - To)));
                         }
                         else
                         {
-                            Buffer = this.MemoryEngine.MemoryHandler.Read(Address, BufferSize);
+                            Buffer = this.BekoEngine.MemoryHandler.Read(Address, BufferSize);
                         }
                     }
                 }
@@ -442,17 +442,17 @@
                 {
                     if (Size < BufferSize)
                     {
-                        Buffer = this.MemoryEngine.MemoryHandler.Read(Address, (uint) Size);
+                        Buffer = this.BekoEngine.MemoryHandler.Read(Address, (uint) Size);
                     }
                     else
                     {
                         if (EndAddr > To)
                         {
-                            Buffer = this.MemoryEngine.MemoryHandler.Read(Address, (uint) (BufferSize - (EndAddr - To)));
+                            Buffer = this.BekoEngine.MemoryHandler.Read(Address, (uint) (BufferSize - (EndAddr - To)));
                         }
                         else
                         {
-                            Buffer = this.MemoryEngine.MemoryHandler.Read(Address, BufferSize);
+                            Buffer = this.BekoEngine.MemoryHandler.Read(Address, BufferSize);
                         }
                     }
                 }

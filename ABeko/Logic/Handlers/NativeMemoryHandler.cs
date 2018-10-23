@@ -1,4 +1,4 @@
-﻿namespace ABeko.Logic.Engines.Memory.Handlers
+﻿namespace ABeko.Logic.Handlers
 {
     using System;
     using System.Runtime.ConstrainedExecution;
@@ -66,7 +66,7 @@
 
             if (this.ProcessId > 0)
             {
-                CloseHandle(this.Handle);
+                NativeMemoryHandler.CloseHandle(this.Handle);
             }
 
             if (ProcId < 0)
@@ -81,7 +81,7 @@
                 return;
             }
 
-            this.Handle = OpenProcess(0x001F0FFF, false, ProcId);
+            this.Handle = NativeMemoryHandler.OpenProcess(0x001F0FFF, false, ProcId);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@
             var Buffer      = new byte[Size];
             var Read        = 0u;
 
-            if (!ReadProcessMemory(this.Handle, Address, Buffer, Size, ref Read))
+            if (!NativeMemoryHandler.ReadProcessMemory(this.Handle, Address, Buffer, Size, ref Read))
             {
                 throw new Exception("Failed to read memory from remote process");
             }
@@ -150,7 +150,7 @@
                 throw new InsufficientMemoryException("Couldn't allocate memory for the buffer");
             }
 
-            var Success     = ReadProcessMemory(this.Handle, Address, Buffer, (uint) Size, ref Read);
+            var Success     = NativeMemoryHandler.ReadProcessMemory(this.Handle, Address, Buffer, (uint) Size, ref Read);
             
             if (Success)
             {

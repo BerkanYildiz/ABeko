@@ -5,63 +5,136 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ABeko.GUI"
         mc:Ignorable="d"
-        Height="650" Width="600" Topmost="True" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Height="700" Width="650" Topmost="True" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Background="#FF2D2D30" Foreground="{x:Null}">
+
     <Grid>
-        <StatusBar Margin="0,0,0,-1" Height="20" VerticalAlignment="Bottom" >
-            <StatusBar.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </StatusBar.RenderTransform>
+        <DockPanel Height="20" VerticalAlignment="Top">
+            <Menu DockPanel.Dock="Top" Height="20" BorderThickness="0,0,0,1" BorderBrush="#FF181819" Foreground="#FF959595" Background="#FF2D2D30" FontWeight="Bold" FontFamily="Yu Gothic UI">
+                <MenuItem Header="Process">
+                    <MenuItem Header="Open"/>
+                    <MenuItem Header="Close"/>
+                </MenuItem>
+                <MenuItem Header="Memory">
+                    <MenuItem Header="Regions"/>
+                    <MenuItem Header="Modules"/>
+                    <MenuItem Header="Strings"/>
+                    <MenuItem Header="Dissasembler"/>
+                </MenuItem>
+                <MenuItem Header="Signatures"/>
+                <MenuItem Header="Settings"/>
+                <MenuItem Header="About"/>
+            </Menu>
+        </DockPanel>
+        <StatusBar Margin="0,0,0,-1" Height="20" VerticalAlignment="Bottom" Background="#FF2D2D30" Foreground="#FFC1C1C1" >
+            <Label Content="Label" Height="14" Width="105" Foreground="#FFC1C1C1" Background="{x:Null}"/>
         </StatusBar>
-        <DataGrid x:Name="ObservedAddresses" Margin="0,0,0,19" Height="150" VerticalAlignment="Bottom" IsSynchronizedWithCurrentItem="False" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" GridLinesVisibility="Horizontal" BorderThickness="0,1" >
+        <DataGrid x:Name="ObservedAddresses" Margin="0,0,0,19" Height="150" VerticalAlignment="Bottom" IsSynchronizedWithCurrentItem="False" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" GridLinesVisibility="Horizontal" BorderThickness="0,1" Background="#FF212123" Foreground="{x:Null}" BorderBrush="#FF101011" >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{x:Null}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Active"/>
-                <DataGridTextColumn Binding="{x:Null}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Description"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Address"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Type"/>
-                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Value"/>
+                <DataGridTextColumn Binding="{x:Null}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Active" Width="20*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF212123"></Setter>
+                            <Setter Property="Foreground" Value="#FFCDCDCD"></Setter>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                            <Setter Property="BorderBrush" Value="#FF101011"></Setter>
+                            <Setter Property="Height" Value="25"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{x:Null}" CanUserSort="False" ClipboardContentBinding="{x:Null}" Header="Description" Width="20*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF212123"></Setter>
+                            <Setter Property="Foreground" Value="#FFCDCDCD"></Setter>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                            <Setter Property="BorderBrush" Value="#FF101011"></Setter>
+                            <Setter Property="Height" Value="25"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Address" Width="20*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF212123"></Setter>
+                            <Setter Property="Foreground" Value="#FFCDCDCD"></Setter>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                            <Setter Property="BorderBrush" Value="#FF101011"></Setter>
+                            <Setter Property="Height" Value="25"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Type" Width="20*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF212123"></Setter>
+                            <Setter Property="Foreground" Value="#FFCDCDCD"></Setter>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                            <Setter Property="BorderBrush" Value="#FF101011"></Setter>
+                            <Setter Property="Height" Value="25"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Value" Width="20*">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF212123"></Setter>
+                            <Setter Property="Foreground" Value="#FFCDCDCD"></Setter>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                            <Setter Property="BorderBrush" Value="#FF101011"></Setter>
+                            <Setter Property="Height" Value="25"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Margin="0,0,0,169">
-            <DataGrid HorizontalAlignment="Left" Margin="0,30,0,0" Width="225" BorderThickness="0,1,1,0">
+            <DataGrid HorizontalAlignment="Left" Margin="0,50,0,0" Width="225" BorderThickness="0,1,1,0" Background="#FF212123" Foreground="{x:Null}" BorderBrush="#FF101011">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Address"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Value"/>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Address" Width="50*">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#FF212123"></Setter>
+                                <Setter Property="Foreground" Value="#FFCDCDCD"></Setter>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                                <Setter Property="BorderBrush" Value="#FF101011"></Setter>
+                                <Setter Property="Height" Value="25"></Setter>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Value" Width="50*">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#FF212123"></Setter>
+                                <Setter Property="Foreground" Value="#FFCDCDCD"></Setter>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                                <Setter Property="BorderBrush" Value="#FF101011"></Setter>
+                                <Setter Property="Height" Value="25"></Setter>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Grid Height="30" VerticalAlignment="Top">
-                <Button x:Name="SearchButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                    <Button.Background>
-                        <ImageBrush ImageSource="Images/search-icon.png" Stretch="UniformToFill"/>
-                    </Button.Background>
-                </Button>
-                <Button x:Name="FileButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" BorderBrush="{x:Null}" Foreground="{x:Null}" Margin="35,0,0,0">
-                    <Button.Background>
-                        <ImageBrush ImageSource="Images/folder-icon.png" Stretch="Uniform"/>
-                    </Button.Background>
-                </Button>
-            </Grid>
-            <Grid Margin="225,188,0,0">
-                <Label Content="Value :" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="92" HorizontalContentAlignment="Right" FontWeight="Bold" Height="23" VerticalContentAlignment="Center" FontSize="11"/>
-                <TextBox Margin="0,69,10,0" TextWrapping="Wrap" HorizontalAlignment="Right" Width="252" Height="23" VerticalAlignment="Top"/>
-                <Label Content="Value Type :" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" Width="92" HorizontalContentAlignment="Right" FontWeight="Bold" Height="23" VerticalContentAlignment="Center" FontSize="11"/>
-                <ComboBox HorizontalAlignment="Right" Margin="0,97,10,0" VerticalAlignment="Top" Width="252" Height="23" SelectedIndex="0">
 
-                </ComboBox>
-                <Label Content="Scan Type :" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Width="92" HorizontalContentAlignment="Right" FontWeight="Bold" Height="23" VerticalContentAlignment="Center" FontSize="11"/>
-                <ComboBox HorizontalAlignment="Right" Margin="0,125,10,0" VerticalAlignment="Top" Width="252" Height="23">
+            <Grid Margin="225,50,0,0"/>
 
-                </ComboBox>
-                <Label Content="Scan Range :" HorizontalAlignment="Left" Margin="10,153,0,0" VerticalAlignment="Top" Width="92" HorizontalContentAlignment="Right" FontWeight="Bold" Height="23" VerticalContentAlignment="Center" FontSize="11"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="107,153,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="115"/>
-                <Label Content=" - " HorizontalAlignment="Left" Margin="222,153,0,0" VerticalAlignment="Top" Width="22" HorizontalContentAlignment="Center" FontWeight="Bold" Height="23" VerticalContentAlignment="Center" FontSize="11"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="244,153,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="115"/>
+            <Grid Height="30" Margin="0,20,0,0" VerticalAlignment="Top">
+                <ProgressBar Margin="0,20,0,0" Height="10" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Foreground="#FF181919" BorderBrush="{x:Null}" Background="#FF575757" BorderThickness="0" Value="100" IsIndeterminate="True"/>
+                <Label Content="(NULL)" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="644" Height="20" Margin="0,0,0,10" FontSize="8" Background="{x:Null}" Foreground="#FFF1F1F1" FontWeight="Bold"/>
             </Grid>
-            <Grid Margin="225,30,0,264"/>
         </Grid>
 
     </Grid>

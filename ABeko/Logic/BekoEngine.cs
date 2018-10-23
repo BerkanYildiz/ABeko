@@ -5,6 +5,9 @@
 
     using ABeko.Logic.Engines;
     using ABeko.Logic.Engines.Memory;
+    using ABeko.Logic.Interfaces;
+
+    using JetBrains.Annotations;
 
     using ScannerEngine = ABeko.Logic.Engines.Scanner.ScannerEngine;
 
@@ -56,6 +59,28 @@
         }
 
         /// <summary>
+        /// Gets the memory handler.
+        /// </summary>
+        public IMemoryHandler MemoryHandler
+        {
+            get
+            {
+                return this.Configuration.MemoryHandler;
+            }
+        }
+
+        /// <summary>
+        /// Gets the requests handler.
+        /// </summary>
+        public IRequestsHandler RequestsHandler
+        {
+            get
+            {
+                return this.Configuration.RequestsHandler;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this instance is loaded.
         /// </summary>
         public bool IsLoaded
@@ -78,7 +103,7 @@
         /// </summary>
         private BekoEngine()
         {
-            this.MemoryEngine = new MemoryEngine(this);
+            this.MemoryEngine  = new MemoryEngine(this);
             this.ScannerEngine = new ScannerEngine(this);
         }
 

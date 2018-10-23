@@ -21,7 +21,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Builds\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>1</WarningLevel>
     <LangVersion>latest</LangVersion>
@@ -35,6 +35,9 @@
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations, Version=2018.2.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.2018.2.1\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -47,8 +50,8 @@
     <Compile Include="Logic\BekoEngine.cs" />
     <Compile Include="Logic\Collections\Modules.cs" />
     <Compile Include="Logic\Collections\Signatures.cs" />
-    <Compile Include="Logic\Engines\Memory\Handlers\NativeMemoryHandler.cs" />
-    <Compile Include="Logic\Engines\Memory\Handlers\NativeRequestsHandler.cs" />
+    <Compile Include="Logic\Handlers\NativeMemoryHandler.cs" />
+    <Compile Include="Logic\Handlers\NativeRequestsHandler.cs" />
     <Compile Include="Logic\Engines\Scanner\Events\ScanInfoEvent.cs" />
     <Compile Include="Logic\Engines\Scanner\ScannerMethods.cs" />
     <Compile Include="Logic\Engines\Memory\MemoryMethods.cs" />
@@ -72,7 +75,9 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Logic\Engines\Memory\Events\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

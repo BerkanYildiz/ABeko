@@ -8,6 +8,7 @@
     using ABeko.CLI.Logic.Commands;
     using ABeko.Logic;
     using ABeko.Logic.Engines.Memory.Handlers;
+    using ABeko.Logic.Handlers;
 
     internal static class Program
     {
@@ -32,7 +33,7 @@
                 MemoryHandler   = new NativeMemoryHandler(),
                 RequestsHandler = new NativeRequestsHandler()
             };
-
+            
             // ..
 
             try

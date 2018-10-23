@@ -6,6 +6,7 @@
 
     using ABeko.Logic;
     using ABeko.Logic.Engines.Memory.Handlers;
+    using ABeko.Logic.Handlers;
     using ABeko.Logic.Types;
 
     internal static class Program
@@ -18,8 +19,9 @@
             var Engine          = (BekoEngine) null;
             var EngineConfig    = new BekoConfig
             {
-                 Process        = Process.GetCurrentProcess(),
-                 MemoryHandlerHandler  = new NativeMemoryHandlerHandler()
+                Process         = Process.GetCurrentProcess(),
+                MemoryHandler   = new NativeMemoryHandler(),
+                RequestsHandler = new NativeRequestsHandler()
             };
 
             // ..
