@@ -6,6 +6,10 @@ ABeko is a repository with libraries and CLI/GUI applications for reading memory
 
 ![ABeko.CLI](https://i.imgur.com/bmSYREJ.png)
 
+# GUI - Example (WIP)
+
+![ABeko.GUI](https://i.imgur.com/Nkgvcgd.png)
+
 # Library - Example
 ```csharp
 namespace ABeko.Tests
