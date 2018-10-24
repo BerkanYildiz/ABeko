@@ -97,11 +97,11 @@
             get;
             private set;
         }
-
+        
         /// <summary>
-        /// Prevents a default instance of the <see cref="BekoEngine"/> class from being created.
+        /// Initializes a new instance of the <see cref="BekoEngine"/> class.
         /// </summary>
-        private BekoEngine()
+        public BekoEngine()
         {
             this.MemoryEngine  = new MemoryEngine(this);
             this.ScannerEngine = new ScannerEngine(this);
