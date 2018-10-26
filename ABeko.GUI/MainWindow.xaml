@@ -5,20 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ABeko.GUI"
         mc:Ignorable="d"
-        Height="800" Width="880" Topmost="True" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" Background="#FF2D2D30" Foreground="{x:Null}">
+        Height="800" Width="960" Topmost="False" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" Background="#FF2D2D30" Foreground="{x:Null}" Title="ABeko.GUI - Engine" UseLayoutRounding="False" MinWidth="880" MinHeight="800" Icon="Images/app.ico">
 
     <Grid>
         <DockPanel Height="20" VerticalAlignment="Top">
             <Menu DockPanel.Dock="Top" Height="20" BorderThickness="0,0,0,1" BorderBrush="#FF181819" Foreground="#FF959595" Background="#FF2D2D30" FontWeight="Bold" FontFamily="Yu Gothic UI">
                 <MenuItem Header="Process">
-                    <MenuItem Header="Open"/>
-                    <MenuItem Header="Close"/>
+                    <MenuItem Header="Open" Foreground="Black" Click="OnOpenProcess"/>
+                    <MenuItem Header="Close" Foreground="Black"/>
                 </MenuItem>
                 <MenuItem Header="Memory">
-                    <MenuItem Header="Regions"/>
-                    <MenuItem Header="Modules"/>
-                    <MenuItem Header="Strings"/>
-                    <MenuItem Header="Dissasembler"/>
+                    <MenuItem Header="Regions" Foreground="Black"/>
+                    <MenuItem Header="Modules" Foreground="Black"/>
+                    <MenuItem Header="Strings" Foreground="Black"/>
+                    <MenuItem Header="Dissasembler" Foreground="Black"/>
                 </MenuItem>
                 <MenuItem Header="Signatures"/>
                 <MenuItem Header="Settings"/>
@@ -31,7 +31,7 @@
             <Label x:Name="ProcessLabel" Content="(NULL)" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="20" Margin="0,0,0,10" FontSize="8" Background="{x:Null}" Foreground="#FFF1F1F1" FontWeight="Bold"/>
         </Grid>
 
-        <Grid x:Name="ObservedAddressesGrid" Margin="249,0,0,25" Height="144" MinHeight="144" VerticalAlignment="Bottom">
+        <Grid x:Name="ObservedAddressesGrid" Margin="249,0,0,25" Height="200" MinHeight="200" VerticalAlignment="Bottom">
             <DataGrid x:Name="ObservedAddresses" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True" GridLinesVisibility="Horizontal" BorderThickness="0,1,1,1" Background="#FF212123" Foreground="#FFCDCDCD" BorderBrush="#FF101011" HeadersVisibility="Column" VerticalGridLinesBrush="#FF101011" HorizontalGridLinesBrush="#FF101011" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Active" IsReadOnly="True" Binding="{Binding Path=Active}" CanUserSort="False" Width="10*">
@@ -102,7 +102,7 @@
                 </DataGrid.Columns>
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
-                        <Setter Property="Background" Value="#FF212123"></Setter>
+                        <Setter Property="Background" Value="#FF19191B"></Setter>
                         <Setter Property="BorderBrush" Value="#FF1B1B1D"></Setter>
                         <Setter Property="BorderThickness" Value="0,0,0,0"></Setter>
                         <Setter Property="Height" Value="20"></Setter>
@@ -155,13 +155,147 @@
                     </Style>
                 </DataGrid.CellStyle>
             </DataGrid>
-            <Thumb Background="{x:Null}" Cursor="SizeWE" HorizontalAlignment="Right" Width="0" DragDelta="OnRetrieveAddressesWidthResize"/>
+            <Thumb IsEnabled="False" Background="{x:Null}" Cursor="SizeWE" HorizontalAlignment="Right" Width="0" DragDelta="OnRetrieveAddressesWidthResize"/>
         </Grid>
 
         <Grid Margin="0,0,0,-1" Background="#FF2D2D30" Height="26" VerticalAlignment="Bottom">
             <Label Content="[✓] ABeko - v1.0.0 - Copyright 2018 - Berkan YILDIZ" Foreground="#FFC1C1C1" Background="{x:Null}" FontSize="10" HorizontalAlignment="Left" Width="322"/>
         </Grid>
-        <Grid Margin="249,50,0,169"/>
+
+        <Grid Margin="249,50,0,225">
+            <Grid Margin="0,0,348,225">
+                <TextBlock Visibility="Hidden" TextWrapping="Wrap" Foreground="#FFC1C1C1" Background="#FF0E0E0E" Padding="10" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <Run Text="$&gt; engine -getVersion"/>
+                    <LineBreak/>
+                    <Run Foreground="#FFA08A00" Text="The executing version is 1.0.0"/>
+                    <LineBreak/>
+                    <Run Text="$&gt; engine -logs"/>
+                    <LineBreak/>
+                    <Run Foreground="#FFA08A00" Text="This program is still under active development."/>
+                    <LineBreak/>
+                    <Run Foreground="#FFA08A00" Text="You can get the source code of this software at :"/>
+                    <LineBreak/>
+                    <Run Foreground="#FFA08A00" Text=" - https://github.com/BerkanYildiz/ABeko"/>
+                </TextBlock>
+            </Grid>
+            <Grid Margin="0,0,0,225" HorizontalAlignment="Right" Width="348">
+                <Border BorderBrush="#FF101011" BorderThickness="1,0,0,0" Background="#FF212123"/>
+                <Label Content="Scan value :" Margin="10,63,0,0" VerticalAlignment="Top" Height="25" HorizontalAlignment="Left" Width="60" Foreground="#FFCDCDCD" FontSize="9" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                <TextBox AcceptsTab="False" Margin="75,63,10,0" Background="#FF252525" BorderBrush="#FF101011" Foreground="#FFCDCDCD" Padding="5,1,5,1" VerticalContentAlignment="Center" Height="25" VerticalAlignment="Top"/>
+                <Label Content="Scan type :" Margin="10,93,0,0" VerticalAlignment="Top" Height="25" HorizontalAlignment="Left" Width="60" Foreground="#FFCDCDCD" FontSize="9" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                <ComboBox Margin="75,93,10,0" Background="#FF252525" BorderBrush="#FF101011" Foreground="#FF2B2B2B" VerticalContentAlignment="Center" SelectedIndex="1" Height="25" VerticalAlignment="Top">
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="Background" Value="#FF212123"></Setter>
+                            <Setter Property="BorderBrush" Value="#FF1B1B1D"></Setter>
+                            <Setter Property="Foreground" Value="#FF6E6E6E"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                            <Setter Property="Height" Value="30"></Setter>
+                            <Setter Property="Padding" Value="0"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+
+                    <ComboBoxItem Content="Byte" Tag="byte"/>
+                    <ComboBoxItem Content="Integer" Tag="int"/>
+                    <ComboBoxItem Content="Long" Tag="long"/>
+                    <ComboBoxItem Content="Float" Tag="float"/>
+                    <ComboBoxItem Content="Custom" Tag="custom"/>
+                </ComboBox>
+
+                <Label Content="Scan range :" Margin="10,123,0,0" VerticalAlignment="Top" Height="25" HorizontalAlignment="Left" Width="60" Foreground="#FFCDCDCD" FontSize="9" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                <Label Content="-" Margin="195,123,0,0" VerticalAlignment="Top" Height="25" HorizontalAlignment="Left" Width="15" Foreground="#FFCDCDCD" FontWeight="Bold" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="UiMinimumRange" AcceptsTab="False" CharacterCasing="Upper" MaxLength="16" Margin="75,123,0,0" Background="#FF252525" BorderBrush="#FF101011" Foreground="#FFCDCDCD" Padding="5,1,5,1" VerticalContentAlignment="Center" Height="25" VerticalAlignment="Top" Text="0000000000000000" HorizontalAlignment="Left" Width="120" PreviewTextInput="OnRangeChanged" />
+                <TextBox x:Name="UiMaximumRange" AcceptsTab="False" CharacterCasing="Upper" MaxLength="16" Margin="210,123,10,0" Background="#FF252525" BorderBrush="#FF101011" Foreground="#FFCDCDCD" Padding="5,1,5,1" VerticalContentAlignment="Center" Height="25" VerticalAlignment="Top" Text="000007FFFFFFFFFF"/>
+
+                <Button Margin="230,0,0,10" Background="#FF232323" Foreground="#FFCDCDCD" BorderBrush="#FF131313" FontFamily="Yu Gothic UI" FontWeight="Bold" Content="Next value" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="108"/>
+                <Button Margin="120,0,0,10" Background="#FF232323" Foreground="#FFCDCDCD" BorderBrush="#FF131313" FontFamily="Yu Gothic UI" FontWeight="Bold" Content="Search" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="105"/>
+                <Button Margin="10,0,0,10" Background="#FF232323" Foreground="#FFCDCDCD" BorderBrush="#FF131313" FontFamily="Yu Gothic UI" FontWeight="Bold" Content="Reset" Height="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="105"/>
+            </Grid>
+            <Grid VerticalAlignment="Bottom" MinHeight="225" Height="225">
+                <DataGrid x:Name="AvailableMemoryRegions" BorderThickness="0,1,1,0" Background="#FF212123" Foreground="#FFCDCDCD" BorderBrush="#FF101011" HeadersVisibility="Column" FontFamily="Yu Gothic UI" RowBackground="#FF858585" IsReadOnly="True" HorizontalGridLinesBrush="#FF101011" VerticalGridLinesBrush="#FF101011" GridLinesVisibility="Horizontal" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Base Address" IsReadOnly="True" Binding="{Binding Path=UiBaseAddress}" Width="20*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF212123"></Setter>
+                                    <Setter Property="BorderBrush" Value="#FF1B1B1D"></Setter>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                                    <Setter Property="Height" Value="30"></Setter>
+                                    <Setter Property="Padding" Value="5,5,5,5"></Setter>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Type" IsReadOnly="True" Binding="{Binding Path=UiType}" Width="15*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF212123"></Setter>
+                                    <Setter Property="BorderBrush" Value="#FF1B1B1D"></Setter>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                                    <Setter Property="Height" Value="30"></Setter>
+                                    <Setter Property="Padding" Value="5,5,5,5"></Setter>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="State" IsReadOnly="True" Binding="{Binding Path=UiState}" Width="15*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF212123"></Setter>
+                                    <Setter Property="BorderBrush" Value="#FF1B1B1D"></Setter>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                                    <Setter Property="Height" Value="30"></Setter>
+                                    <Setter Property="Padding" Value="5,5,5,5"></Setter>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Protection" IsReadOnly="True" Binding="{Binding Path=UiProtection}" Width="20*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF212123"></Setter>
+                                    <Setter Property="BorderBrush" Value="#FF1B1B1D"></Setter>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                                    <Setter Property="Height" Value="30"></Setter>
+                                    <Setter Property="Padding" Value="5,5,5,5"></Setter>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Size" IsReadOnly="True" Binding="{Binding Path=UiSize}" Width="20*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#FF212123"></Setter>
+                                    <Setter Property="BorderBrush" Value="#FF1B1B1D"></Setter>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                                    <Setter Property="Height" Value="30"></Setter>
+                                    <Setter Property="Padding" Value="5,5,5,5"></Setter>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="#FF19191B"></Setter>
+                            <Setter Property="BorderBrush" Value="#FF1B1B1D"></Setter>
+                            <Setter Property="BorderThickness" Value="0,0,0,0"></Setter>
+                            <Setter Property="Height" Value="20"></Setter>
+                            <Setter Property="Padding" Value="5,5,5,5"></Setter>
+                            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+                            <Setter Property="FontWeight" Value="Bold"></Setter>
+                        </Style>
+                    </DataGrid.CellStyle>
+                </DataGrid>
+            </Grid>
+        </Grid>
 
     </Grid>
 </Window>

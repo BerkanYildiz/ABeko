@@ -1,0 +1,17 @@
+﻿<Window x:Class="ABeko.GUI.ProcessSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ABeko.GUI"
+        mc:Ignorable="d"
+        Title="ABeko.GUI - Engine" Height="350" Width="550" Topmost="True" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" ResizeMode="NoResize" Background="#FF2D2D30" Icon="Images/app.ico">
+    <Grid>
+        <Grid HorizontalAlignment="Left" Height="321"  Width="272" VerticalAlignment="Top" Background="#FF212123">
+            <ListBox x:Name="ProcessesSelectionList" Background="#FF212123" BorderBrush="#FF101011" BorderThickness="1" SelectionMode="Single" Foreground="#FFCDCDCD" FontFamily="Yu Gothic UI" Padding="5,5,5,5"/>
+        </Grid>
+        <Grid HorizontalAlignment="Right" Height="321" Width="272" VerticalAlignment="Bottom" Background="#FF212123">
+
+        </Grid>
+    </Grid>
+</Window>
