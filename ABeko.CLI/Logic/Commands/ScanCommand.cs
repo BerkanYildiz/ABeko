@@ -425,7 +425,7 @@
                     {
                         try
                         {
-                            Signature = new Signature("CLI", ValueS, new SignatureMask(new string('X', ValueS.Length / 2)));
+                            Signature = new Signature("CLI", ValueS, new SignatureMask(new string('?', ValueS.Length / 2)));
                         }
                         catch (Exception Exception)
                         {

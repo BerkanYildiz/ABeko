@@ -7,8 +7,6 @@
     using ABeko.Logic.Engines.Memory;
     using ABeko.Logic.Interfaces;
 
-    using JetBrains.Annotations;
-
     using ScannerEngine = ABeko.Logic.Engines.Scanner.ScannerEngine;
 
     public class BekoEngine : IDisposable

@@ -7,6 +7,7 @@
     using ABeko.Logic;
     using ABeko.Logic.Engines.Memory.Handlers;
     using ABeko.Logic.Handlers;
+    using ABeko.Logic.Native.Enums;
     using ABeko.Logic.Types;
 
     internal static class Program
@@ -19,7 +20,7 @@
             var Engine          = (BekoEngine) null;
             var EngineConfig    = new BekoConfig
             {
-                Process         = Process.GetCurrentProcess(),
+                Process         = Process.GetProcessById(16800),
                 MemoryHandler   = new NativeMemoryHandler(),
                 RequestsHandler = new NativeRequestsHandler()
             };
@@ -51,12 +52,14 @@
 
                     // Sig-scanning
 
-                    var UWorldSig = new Signature("UWorldSig", Signature: "00-00-00", new SignatureMask("XXX", AnythingMask: '*', SpecifiedMask: 'X'));
+                    var UWorldSig = new Signature("UWorldSig", Signature: "48-8B-1D-00-00-00-00-48-85-DB-74-3B-41", new SignatureMask("XXX????XXXXXX", AnythingMask: '?', SpecifiedMask: 'X'));
                     Scanner.Signatures.Add(UWorldSig);
 
                     try
                     {
-                        if (Scanner.TrySearchFor(UWorldSig, From: 0x0000007FFFFFFFFF, To: 0x0000007FFFFFFFFF + 32, out var Result))
+                        var Regions = Memory.GetMemoryRegions(Region => Region.State == MemoryPageState.MEM_COMMIT);
+
+                        if (Scanner.TrySearchFor(UWorldSig, Regions, out var Result))
                         {
                             if (!Result.IsErrored)
                             {

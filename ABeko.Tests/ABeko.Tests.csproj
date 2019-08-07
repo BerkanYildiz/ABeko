@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Costura.Fody.3.1.5\build\Costura.Fody.props" Condition="Exists('..\packages\Costura.Fody.3.1.5\build\Costura.Fody.props')" />
-  <Import Project="..\packages\Obfuscar.2.2.13\build\obfuscar.props" Condition="Exists('..\packages\Obfuscar.2.2.13\build\obfuscar.props')" />
+  <Import Project="..\packages\Obfuscar.2.2.18\build\obfuscar.props" Condition="Exists('..\packages\Obfuscar.2.2.18\build\obfuscar.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -41,13 +40,11 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Costura, Version=3.1.5.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
-      <HintPath>..\packages\Costura.Fody.3.1.5\lib\net46\Costura.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handlers\KernelMemoryHandler.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,26 +56,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FodyWeavers.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ABeko\ABeko.csproj">
       <Project>{58F323E2-6187-42D7-B913-C8B3C073CAE2}</Project>
       <Name>ABeko</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>Ce projet fait référence à des packages NuGet qui sont manquants sur cet ordinateur. Utilisez l'option de restauration des packages NuGet pour les télécharger. Pour plus d'informations, consultez http://go.microsoft.com/fwlink/?LinkID=322105. Le fichier manquant est : {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Obfuscar.2.2.13\build\obfuscar.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Obfuscar.2.2.13\build\obfuscar.props'))" />
-    <Error Condition="!Exists('..\packages\Fody.3.2.11\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.2.11\build\Fody.targets'))" />
-    <Error Condition="!Exists('..\packages\Costura.Fody.3.1.5\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.3.1.5\build\Costura.Fody.props'))" />
-    <Error Condition="!Exists('..\packages\Costura.Fody.3.1.5\build\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.3.1.5\build\Costura.Fody.targets'))" />
-  </Target>
-  <Import Project="..\packages\Fody.3.2.11\build\Fody.targets" Condition="Exists('..\packages\Fody.3.2.11\build\Fody.targets')" />
-  <Import Project="..\packages\Costura.Fody.3.1.5\build\Costura.Fody.targets" Condition="Exists('..\packages\Costura.Fody.3.1.5\build\Costura.Fody.targets')" />
   <PropertyGroup>
     <PreBuildEvent>DEL /S "$(TargetDir)*.xml"
 DEL /S "$(TargetDir)*.pdb"
@@ -112,4 +95,10 @@ if "$(ConfigurationName)" == "Release" (
 DEL /S "$(TargetDir)*.dll"
 </PostBuildEvent>
   </PropertyGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Ce projet fait référence à des packages NuGet qui sont manquants sur cet ordinateur. Utilisez l'option de restauration des packages NuGet pour les télécharger. Pour plus d'informations, consultez http://go.microsoft.com/fwlink/?LinkID=322105. Le fichier manquant est : {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Obfuscar.2.2.18\build\obfuscar.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Obfuscar.2.2.18\build\obfuscar.props'))" />
+  </Target>
 </Project>
